@@ -1,0 +1,324 @@
+Training CV (NO LEAK)...
+
+=== FOLD 1 ===
+Fold 1 AUC: 0.9592394533571005
+
+=== FOLD 2 ===
+Fold 2 AUC: 0.9630059523809524
+
+=== FOLD 3 ===
+Fold 3 AUC: 0.9628226817042606
+
+=== FOLD 4 ===
+Fold 4 AUC: 0.9662233709273182
+
+=== FOLD 5 ===
+Fold 5 AUC: 0.9647472345704539
+
+=== OVERALL OOF AUC: 0.9629916353685092 ===
+
+
+==============================================================
+TRAINING FINAL MODEL ON FULL TRAIN SET (ARTIFACTS)
+==============================================================
+Final model trained on TRAIN set. Artifacts ready: nn_final, ohe_final, scaler_final, clf_final.
+
+Part 2: inference helpers and Trust Score (Balanced) ready.
+
+==============================================================
+BUILDING HOLDOUT FEATURES
+==============================================================
+
+================================================================================
+EVALUATING ON HOLDOUT TEST SET (20%) - 2 SCENARIOS
+================================================================================
+
+=== SCENARIO 1: Sản phẩm mới (KHÔNG có comment/rating) ===
+
+HOLDOUT TEST AUC (sản phẩm mới): 0.6756
+
+=== SCENARIO 2: Sản phẩm đã có comment/rating ===
+
+HOLDOUT TEST AUC (sản phẩm có dữ liệu): 0.9648
+
+====================================================================================================
+DEMO: SO SÁNH 3 CHIẾN LƯỢC TỐI ƯU GIÁ
+====================================================================================================
+
+📋 THÔNG TIN SẢN PHẨM:
+   Tên: Bộ váy hai mảnh CHANGTONG cổ chữ V cotton thoáng khí phong cách Hàn Quốc thanh l...
+   Cửa hàng: Changtong Fashion
+   Phân loại: Thời trang - Trung+
+   💰 Giá nhập (original_price): 300,000 VNĐ
+   🏷️  Giá dự định bán (price_to_test): 280,000 VNĐ
+   📉 % Giảm giá dự định: 6.67%
+   ⭐ Rating: 4.9/5.0
+   💬 Số comment: 30
+
+🎯 Đang tính toán tối ưu với 3 chiến lược...
+
+⏳ Đang tính toán 🔴 AGGRESSIVE...
+
+   🔍 KIỂM TRA OUTLIER (dựa trên Original Price):
+      User original price: 300,000 VNĐ
+      Market original price range: 218,000 - 220,000 VNĐ
+      Market original price median: 220,000 VNĐ
+      Market price range: 114,400 - 135,300 VNĐ
+      Market price median: 124,850 VNĐ
+      Ratio: 1.36x
+   ✅ KHÔNG OUTLIER: Original price nằm trong khoảng hợp lý với thị trường
+       → Sử dụng market range và discount range bình thường
+   🔧 Tính base range từ giao của market và discount range
+   🔴 AGGRESSIVE: Mở rộng về phía LOW (giá thấp) -30% low / -20% high
+   📊 Candidate price range: 80,080 - 108,240 VNĐ
+   📊 Số lượng giá candidate: 7 giá trị (bước nhảy 5,000 VNĐ)
+   ✅ Sử dụng comment/rating thực tế từ sản phẩm:
+      Comment count: 30
+      Rating: 4.90/5.0
+      📊 Rating cao + Comment TB → THƯỞNG +10%
+
+   🔍 DEBUG AGGRESSIVE - Candidates:
+      Total valid_candidates: 7
+      Candidates in 420K-430K range: 0
+
+   🔍 DEBUG AGGRESSIVE - Top 5 candidates:
+      1. Giá: 110,080 | Discount: 63.3% | Prob: 27.4% | Revenue: 30,121
+      2. Giá: 105,080 | Discount: 65.0% | Prob: 25.3% | Revenue: 26,537
+      3. Giá: 100,080 | Discount: 66.6% | Prob: 23.6% | Revenue: 23,662
+      4. Giá: 95,080 | Discount: 68.3% | Prob: 22.5% | Revenue: 21,406
+      5. Giá: 85,080 | Discount: 71.6% | Prob: 21.8% | Revenue: 18,535
+      🔍 Giá tốt nhất (110,080) chạm biên HIGH → Mở rộng lên cao hơn
+
+   🔴 AGGRESSIVE: Chọn giá tối ưu XÁC SUẤT BÁN cao nhất
+
+   ⚠️  FALLBACK (AGGRESSIVE): Không tìm được giá cho tỷ lệ bán tốt hơn (27.4% ≤ 45.0%)
+       → Sử dụng chính xác price_to_test = 280,000 VNĐ
+   📊 Kết quả:
+      Giá đề xuất: 280,000 VNĐ
+      Xác suất bán: 45.0%
+      Baseline (price_to_test): 45.0%
+      ✅ Đạt yêu cầu: Xác suất >= baseline (45.0% >= 45.0%)
+⏳ Đang tính toán 🟡 BALANCED...
+
+   🔍 KIỂM TRA OUTLIER (dựa trên Original Price):
+      User original price: 300,000 VNĐ
+      Market original price range: 218,000 - 220,000 VNĐ
+      Market original price median: 220,000 VNĐ
+      Market price range: 114,400 - 135,300 VNĐ
+      Market price median: 124,850 VNĐ
+      Ratio: 1.36x
+   ✅ KHÔNG OUTLIER: Original price nằm trong khoảng hợp lý với thị trường
+       → Sử dụng market range và discount range bình thường
+   🔧 Tính base range từ giao của market và discount range
+   🟡 BALANCED: Mở rộng CÂN ĐỐI -25% low / +25% high
+   📊 Candidate price range: 85,800 - 169,125 VNĐ
+   📊 Số lượng giá candidate: 18 giá trị (bước nhảy 5,000 VNĐ)
+   ✅ Sử dụng comment/rating thực tế từ sản phẩm:
+      Comment count: 30
+      Rating: 4.90/5.0
+      📊 Rating cao + Comment TB → THƯỞNG +10%
+
+   🟡 BALANCED: Chọn giá tối ưu CÂN BẰNG (50% tỷ lệ + 50% doanh thu)
+      Balance score: 1.200
+      Prob normalized: 1.000 | Revenue normalized: 1.000
+      Balance deviation: 0.000 (càng nhỏ càng cân bằng)
+      ✅ Trade-off tốt: Balance score 1.200 > baseline 0.697
+      📊 Prob +30.7%, Revenue -20.3%
+   📊 Kết quả:
+      Giá đề xuất: 170,800 VNĐ
+      Xác suất bán: 58.8%
+      Baseline (price_to_test): 45.0%
+      ✅ Đạt yêu cầu: Xác suất >= baseline (58.8% >= 45.0%)
+⏳ Đang tính toán 🟢 CONSERVATIVE...
+
+   🔍 KIỂM TRA OUTLIER (dựa trên Original Price):
+      User original price: 300,000 VNĐ
+      Market original price range: 218,000 - 220,000 VNĐ
+      Market original price median: 220,000 VNĐ
+      Market price range: 114,400 - 135,300 VNĐ
+      Market price median: 124,850 VNĐ
+      Ratio: 1.36x
+   ✅ KHÔNG OUTLIER: Original price nằm trong khoảng hợp lý với thị trường
+       → Sử dụng market range và discount range bình thường
+   🔧 Tính base range từ giao của market và discount range
+   🟢 CONSERVATIVE: Thu hẹp phía LOW, mở rộng phía HIGH +20% low / +30% high
+   📊 Candidate price range: 137,280 - 175,890 VNĐ
+   📊 Số lượng giá candidate: 9 giá trị (bước nhảy 5,000 VNĐ)
+   ✅ Sử dụng comment/rating thực tế từ sản phẩm:
+      Comment count: 30
+      Rating: 4.90/5.0
+      📊 Rating cao + Comment TB → THƯỞNG +10%
+
+   🔍 DEBUG CONSERVATIVE - Candidates:
+      Total valid_candidates: 9
+
+   🔍 DEBUG CONSERVATIVE - Top 10 candidates by REVENUE:
+      1. Giá: 177,280 | Discount: 40.9% | Prob: 48.6% | Revenue: 86,072
+      2. Giá: 172,280 | Discount: 42.6% | Prob: 48.2% | Revenue: 83,100
+      3. Giá: 167,280 | Discount: 44.2% | Prob: 47.9% | Revenue: 80,094
+      4. Giá: 157,280 | Discount: 47.6% | Prob: 48.8% | Revenue: 76,720
+      5. Giá: 162,280 | Discount: 45.9% | Prob: 46.7% | Revenue: 75,741
+      6. Giá: 152,280 | Discount: 49.2% | Prob: 48.4% | Revenue: 73,643
+      7. Giá: 147,280 | Discount: 50.9% | Prob: 49.2% | Revenue: 72,419
+      8. Giá: 142,280 | Discount: 52.6% | Prob: 49.2% | Revenue: 69,945
+      9. Giá: 137,280 | Discount: 54.2% | Prob: 48.7% | Revenue: 66,914
+      🔍 Giá tốt nhất (177,280, discount 40.9%) chạm biên HIGH
+         → Mở rộng discount từ 40.9% xuống 36.8%
+         → Mở rộng giá từ 177,280 lên 189,552
+         → Duyệt thêm 2 giá trị
+         ✅ Tìm được giá tốt hơn: 182,280 | Discount: 39.2% | Prob: 48.5% | Revenue: 88,329
+         ✅ Tìm được giá tốt hơn: 187,280 | Discount: 37.6% | Prob: 48.7% | Revenue: 91,283
+
+   🟢 CONSERVATIVE: Chọn giá tối ưu DOANH THU KỲ VỌNG cao nhất
+
+   ⚠️  FALLBACK (CONSERVATIVE): Không tìm được giá cho doanh thu kỳ vọng tốt hơn (91,283 ≤ 125,890)
+       → Sử dụng chính xác price_to_test = 280,000 VNĐ
+   📊 Kết quả:
+      Giá đề xuất: 280,000 VNĐ
+      Xác suất bán: 45.0%
+      Baseline (price_to_test): 45.0%
+      📊 Xác suất bán: 45.0% (ưu tiên lợi nhuận, không ràng buộc tỷ lệ)
+
+====================================================================================================
+🔍 CROSS-VALIDATION: Kiểm tra ràng buộc giữa các chiến lược
+====================================================================================================
+
+📊 Kết quả ban đầu:
+   Tỷ lệ bán:    AGG=45.0% | BAL=58.8% | CON=45.0% | Baseline=45.0%
+   Doanh thu KV:  AGG=125,890 | BAL=100,393 | CON=125,890
+
+✓ Kiểm tra ràng buộc 1: Tỷ lệ bán AGG ≥ BAL ≥ CON
+   ⚠️  VI PHẠM: AGGRESSIVE (45.0%) không cao nhất!
+   🔄 ĐIỀU CHỈNH: Sử dụng giá từ BALANCED cho AGGRESSIVE
+      BALANCED prob (58.8%) > baseline (45.0%)
+      ✅ AGGRESSIVE mới: Giá=170,800 | Prob=58.8%
+
+✓ Kiểm tra ràng buộc 2: Doanh thu KV CON ≥ BAL ≥ AGG
+   ✅ ĐẠT: 125,890 ≥ 100,393 ≥ 100,393
+
+✓ Kiểm tra ràng buộc 3: AGG & BAL prob ≥ baseline
+   ✅ ĐẠT: AGG=58.8% & BAL=58.8% ≥ baseline=45.0%
+
+🔧 Đã thực hiện điều chỉnh cross-validation
+
+📊 Kết quả sau điều chỉnh:
+   Tỷ lệ bán:    AGG=58.8% | BAL=58.8% | CON=45.0%
+   Doanh thu KV:  AGG=100,393 | BAL=100,393 | CON=125,890
+
+====================================================================================================
+📊 THÔNG TIN THỊ TRƯỜNG (Chung cho cả 3 chiến lược)
+====================================================================================================
+
+📈 KHOẢNG GIÁ THỊ TRƯỜNG:
+   Thấp nhất:       114,400 VNĐ
+   Cao nhất:        135,300 VNĐ
+   Trung bình:      124,850 VNĐ
+
+📉 KHOẢNG % GIẢM GIÁ THỊ TRƯỜNG:
+   Thấp nhất:   38.50%
+   Cao nhất:    48.00%
+   Trung bình:  43.25%
+
+📊 XÁC SUẤT NẾU BÁN GIÁ DỰ ĐỊNH (280,000 VNĐ):
+   - Xác suất gốc (model):              53.0%
+   - Sau điều chỉnh tin cậy:            45.0%
+   - Trust score người dùng:            0.697
+
+====================================================================================================
+🎯 SO SÁNH KẾT QUẢ TỐI ƯU CỦA 3 CHIẾN LƯỢC
+====================================================================================================
+
+┌────────────────────────┬──────────────────────┬──────────────────────┬──────────────────────┐
+│      CHỈ TIÊU          │   🔴 AGGRESSIVE      │    🟡 BALANCED       │  🟢 CONSERVATIVE     │
+├────────────────────────┼──────────────────────┼──────────────────────┼──────────────────────┤
+│ 💰 Giá đề xuất (VNĐ)   │            170,800   │            170,800   │            280,000   │
+│ 📉 % Giảm giá          │              43.07%  │              43.07%  │               6.67%  │
+│ 📊 Xác suất bán (%)    │               58.8%  │               58.8%  │               45.0%  │
+│ 💰 Doanh thu KV (VNĐ)  │            100,393   │            100,393   │            125,890   │
+│ 🎯 Trust score         │              0.903   │              0.903   │              0.697   │
+│ ⚙️  Fallback used       │                False  │                False  │                False  │
+└────────────────────────┴──────────────────────┴──────────────────────┴──────────────────────┘
+
+====================================================================================================
+🔍 KIỂM TRA RÀNG BUỘC TỶ LỆ BÁN
+====================================================================================================
+
+📊 Tỷ lệ bán thực tế:
+   • AGGRESSIVE:    58.8%
+   • BALANCED:      58.8%
+   • CONSERVATIVE:  45.0%
+   • Baseline (price_to_test): 45.0%
+
+✓ Ràng buộc 1: Tỷ lệ bán AGGRESSIVE ≥ BALANCED ≥ CONSERVATIVE
+   ✅ ĐẠT: 58.8% ≥ 58.8% ≥ 45.0%
+
+✓ Ràng buộc 2: Tỷ lệ bán AGGRESSIVE và BALANCED ≥ Baseline
+   ✅ ĐẠT:
+      - AGGRESSIVE: 58.8% ≥ 45.0%
+      - BALANCED:   58.8% ≥ 45.0%
+
+🎉 TẤT CẢ RÀNG BUỘC ĐỀU ĐẠT YÊU CẦU!
+
+====================================================================================================
+📝 GIẢI THÍCH CHI TIẾT 3 CHIẾN LƯỢC
+====================================================================================================
+
+🔴 AGGRESSIVE (Tích cực - Bán nhanh):
+   🎯 Mục tiêu: TỐI ĐA HÓA XÁC SUẤT BÁN
+   ✅ Ưu điểm:
+      - Xác suất bán cao nhất → Bán nhanh, thu hồi vốn nhanh
+      - Phù hợp với hàng tồn kho, thanh lý, cần bán gấp
+      - Chấp nhận giảm giá mạnh để thu hút khách
+   ⚠️  Rủi ro:
+      - Chấp nhận LỖ lên tới 50% nếu cần
+      - KHÔNG tuân thủ market discount range
+      - Penalty nặng nếu vượt quá market discount (trừ khi có review tốt)
+   📊 Kết quả: Giá 170,800 VNĐ | Prob 58.8% | Margin -43.1%
+
+🟡 BALANCED (Cân bằng - Tối ưu tổng thể):
+   🎯 Mục tiêu: CÂN BẰNG TỐI ƯU giữa TỶ LỆ BÁN và DOANH THU
+   ✅ Ưu điểm:
+      - Trade-off thông minh: 50% tỷ lệ bán + 50% doanh thu kỳ vọng
+      - Khuyến khích nằm trong MARKET RANGE (giá + discount)
+      - Sweet spot: Giá & discount ở mức trung bình (40-60%) → Buff +5-10%
+      - TUÂN THỦ market price range và discount range
+      - Có thể đánh đổi linh hoạt để đạt cân bằng tốt nhất
+   ⚠️  Rủi ro:
+      - Chấp nhận lỗ tối đa 10% (ưu tiên)
+   💡 Phù hợp: Đa số tình huống bán hàng thông thường, muốn cân bằng
+   📊 Kết quả: Giá 170,800 VNĐ | Prob 58.8% | Margin -43.1%
+
+🟢 CONSERVATIVE (Thận trọng - Tối đa doanh thu):
+   🎯 Mục tiêu: TỐI ĐA HÓA DOANH THU KỲ VỌNG (prob × price)
+   ✅ Ưu điểm:
+      - Tối đa hóa doanh thu kỳ vọng, không chỉ lợi nhuận
+      - Giữ giá CAO nhưng vẫn đảm bảo xác suất bán hợp lý
+      - Phù hợp hàng cao cấp, có thương hiệu, độc quyền
+   ⚠️  Rủi ro:
+      - Xác suất bán có thể thấp hơn AGGRESSIVE và BALANCED
+      - Giảm giá ít hơn, lệch khỏi disc_low quá 20% sẽ bị phạt
+      - Penalty nặng nếu thiếu review tốt
+   💡 Chỉ dùng khi: Sản phẩm độc đáo, ít cạnh tranh, có review tốt
+   📊 Kết quả: Giá 280,000 VNĐ | Prob 45.0% | Revenue KV 125,890
+
+====================================================================================================
+💡 KHUYẾN NGHỊ LỰA CHỌN CHIẾN LƯỢC
+====================================================================================================
+
+✨ KHUYẾN NGHỊ: 🟢 CONSERVATIVE hoặc 🟡 BALANCED
+   Lý do: Sản phẩm có review tốt (≥20 comments, rating ≥4.5)
+   → Có thể tối đa hóa doanh thu hoặc cân bằng tối ưu
+
+----------------------------------------------------------------------------------------------------
+📦 MỘT SỐ SẢN PHẨM TƯƠNG TỰ (sau lọc category + outlier):
+                                                                                                          name     price    sold  comment_count  rating  original_price  discount_percent
+0  Quần Jean Nam Ống Đứng Quần Bò Nam Cotton Ống Suông Vải Dày Đẹp Form Chuẩn Không Phai Màu Cao Cấp Nhiều Màu  117720.0   294.0           89.0     4.8        218000.0              0.46
+1                BỘ QUẦN ÁO NAM NỮ BC CỔ TRÒN CHẤT COTTON CHÉO THOÁNG MÁT PHONG CÁCH SÀNH ĐIỆU - TOKYO FASHION  132000.0    26.0            5.0     5.0        220000.0              0.40
+2           BỘ QUẦN ÁO NAM NỮ BC CỔ TRÒN CHẤT COTTON CHÉO THOÁNG MÁT PHONG CÁCH SANG CHẢNH VIP - TOKYO FASHION  114400.0     5.0            3.0     5.0        220000.0              0.48
+3                         Quần Jean Nam Quần Bò Nam Cotton Ống Suông Không Co Giãn Form Chuẩn Dày Dặn,Mềm Mịn.  128620.0  2200.0          790.0     4.8        218000.0              0.41
+4           BỘ QUẦN ÁO NAM NỮ BC CỔ TRÒN CHẤT COTTON CHÉO THOÁNG MÁT PHONG CÁCH SANG CHẢNH MỚI - DUBAI FASHION  114400.0    22.0            7.0     5.0        220000.0              0.48
+5                  BỘ QUẦN ÁO NAM NỮ BC CỔ TRÒN CHẤT COTTON CHÉO THOÁNG MÁT PHONG CÁCH CAO CẤP - DUBAI FASHION  138600.0   125.0           31.0     4.4        220000.0              0.37
+
+====================================================================================================
+✅ HOÀN THÀNH SO SÁNH 3 CHIẾN LƯỢC TỐI ƯU GIÁ!
+====================================================================================================
